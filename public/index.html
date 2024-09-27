@@ -12,6 +12,26 @@
       <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
     </noscript>
     <div id="app"></div>
+    <script>
+      function updateStyle() {
+          const appElement = document.getElementById('app');
+          const screenWidth = window.innerWidth;
+
+          if (screenWidth >= 1024) {
+              appElement.style.display = 'grid';
+              appElement.style.gridTemplateColumns = '1fr 1fr';
+          } else {
+              appElement.style.display = 'block';
+              appElement.style.gridTemplateColumns = ''; // Reset to default
+          }
+      }
+
+      // Initial style update
+      updateStyle();
+
+      // Update style on window resize
+      window.addEventListener('resize', updateStyle);
+    </script>
     <!-- built files will be auto injected -->
   </body>
 </html>
