@@ -3,8 +3,9 @@ import { ref } from 'vue';
 import OrderCard from '@/components/OrderCard.vue'
 
 const userRole = ref(localStorage.getItem('userRole') || 'visitor');
+const orderIds = ref(localStorage.getItem('orderIds') || '');
 const pendingList = ref([
-  { id: 'ORD00000', status: 'COMPLETED', member: 'MCD00000'},
+  { id: 'ORD00000', status: 'COMPLETED', member: 'MCD00000', datetime: '2024-09-28 12:30 PM'},
 ]);
 </script>
 
@@ -12,7 +13,7 @@ const pendingList = ref([
   <div class="myContent">
     <h2>Hi, {{ userRole }}</h2>
     <h4>The following orders are ready for collection.</h4>
-    <p>Your Order No: -</p>
+    <p>Your Order No: {{ orderIds }}</p>
     <div style="display:block">
       <div v-for="ord in pendingList"
         :key="ord.id"
@@ -22,6 +23,7 @@ const pendingList = ref([
           :order="ord.id"
           :status="ord.status"
           :member="ord.member"
+          :datetime="ord.datetime"
         />
       </div>
     </div>

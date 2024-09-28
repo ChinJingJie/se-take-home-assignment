@@ -3,18 +3,15 @@ import { ref } from 'vue';
 import OrderCard from '@/components/OrderCard.vue'
 
 const userRole = ref(localStorage.getItem('userRole') || 'visitor');
-const pendingList = ref([
-  { id: 'ORD00001', status: 'PACKING', member: 'MCD00001'},
-  { id: 'ORD00003', status: 'PACKING', member: 'MCD00002'},
-  { id: 'ORD00002', status: 'WAITING', member: '-'},
-]);
+const pendingList = ref(JSON.parse(localStorage.getItem('pendingList')) || []);
+const orderIds = ref(localStorage.getItem('orderIds') || '');
 </script>
 
 <template>
   <div class="myContent">
     <h2>Hi, {{ userRole }}</h2>
     <h4>The following orders are in preparation.</h4>
-    <p>Your Order No: -</p>
+    <p>Your Order No: {{ orderIds }}</p>
     <div style="display:block">
       <div v-for="ord in pendingList"
         :key="ord.id"
@@ -24,6 +21,7 @@ const pendingList = ref([
           :order="ord.id"
           :status="ord.status"
           :member="ord.member"
+          :datetime="ord.datetime"
         />
       </div>
     </div>

@@ -11,6 +11,7 @@ function scrollToSection(id) {
 }
 
 const userRole = ref(localStorage.getItem('userRole') || 'visitor');
+const userId = ref(localStorage.getItem('userId') || '-');
 
 const sectionList = ref([
   { label: 'Login', path: '/', id: 'login', roles: ['visitor'] },
@@ -26,30 +27,53 @@ const filteredSections = computed(() => {
   return sectionList.value.filter(section => section.roles.includes(userRole.value));
 });
 
+const generateUniqueId = (prefix) => {
+  const randomPart = Math.floor(10000 + Math.random() * 90000); // Generates a 5-digit number
+  return `${prefix}${randomPart}`;
+};
+
 const route = useRoute();
 watch(route, (newRoute) => {
     if (newRoute.path === '/logout') {
         userRole.value = 'visitor'; 
         localStorage.removeItem('userRole');
+        localStorage.removeItem('userId');
     }
     else if (newRoute.path === '/form') {
         userRole.value = 'guest'; 
         localStorage.setItem('userRole',userRole.value);
+        userId.value = '-'; 
+        localStorage.setItem("userId",'-');
     }
     else if (newRoute.path === '/vipform') {
         userRole.value = 'vip'; 
         localStorage.setItem('userRole',userRole.value);
+
+        const myId = generateUniqueId('VIP');
+        userId.value = myId; 
+        localStorage.setItem("userId",userId.value)
     }
     else if (newRoute.path === '/bot') {
         userRole.value = 'staff'; 
         localStorage.setItem('userRole',userRole.value);
+        
+        const myId = generateUniqueId('MCD');
+        userId.value = myId; 
+        localStorage.setItem("userId",userId.value)
     }
+});
+
+watch(() => {
+  userId.value = localStorage.getItem('userId') || '-';
 });
 </script>
 
 <template>
   <header class="header">
     <h1 class="title">McDonald</h1>
+    <p v-if="userRole !== 'guest' && userRole !== 'visitor'">
+      {{ userRole === 'vip' ? 'Member ID: ' : 'Staff ID: ' }}{{ userId }}
+    </p>
 
     <nav class="nav-container">
       <button v-for="section in filteredSections" :key="section" @click="scrollToSection(section.id)" class="nav-button">

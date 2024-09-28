@@ -12,6 +12,10 @@ defineProps({
     type: String,
     required: true
   },
+  datetime: {
+    type: String,
+    required: true
+  },
 })
 </script>
 
@@ -28,6 +32,10 @@ defineProps({
     <div class="info">
       <div class="label">Member ID:</div>
       <span>{{ member }}</span>
+    </div>
+    <div class="info">
+      <div class="label">Order Time:</div>
+      <span>{{ datetime }}</span>
     </div>
   </div>
 </template>
