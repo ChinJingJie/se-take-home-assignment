@@ -38,6 +38,7 @@ watch(route, (newRoute) => {
         userRole.value = 'visitor'; 
         localStorage.removeItem('userRole');
         localStorage.removeItem('userId');
+        localStorage.removeItem('orderIds');
     }
     else if (newRoute.path === '/form') {
         userRole.value = 'guest'; 
