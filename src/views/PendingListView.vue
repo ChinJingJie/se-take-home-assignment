@@ -1,10 +1,32 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted, onBeforeUnmount } from 'vue';
 import OrderCard from '@/components/OrderCard.vue'
 
 const userRole = ref(localStorage.getItem('userRole') || 'visitor');
 const pendingList = ref(JSON.parse(localStorage.getItem('pendingList')) || []);
 const orderIds = ref(localStorage.getItem('orderIds') || '');
+
+// Function to refresh pendingList from localStorage
+const refreshPendingList = () => {
+  pendingList.value = JSON.parse(localStorage.getItem('pendingList')) || [];
+};
+
+// Event handler for storage event
+const handleStorageChange = (event) => {
+  if (event.key === 'pendingList') {
+    refreshPendingList();
+  }
+};
+
+// Set up event listener on component mount
+onMounted(() => {
+  window.addEventListener('storage', handleStorageChange);
+});
+
+// Clean up event listener on component unmount
+onBeforeUnmount(() => {
+  window.removeEventListener('storage', handleStorageChange);
+});
 </script>
 
 <template>

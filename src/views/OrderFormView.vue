@@ -42,7 +42,7 @@ const newOrder = () => {
     datetime: now.toLocaleString('en-US', options)
   };
 
-  pendingList.value.push(orderObj);
+  pendingList.value = [...pendingList.value, orderObj];
   pendingList.value = pendingList.value.sort((a, b) => {
     const aStartsWithV = a.id.startsWith('V');
     const bStartsWithV = b.id.startsWith('V');

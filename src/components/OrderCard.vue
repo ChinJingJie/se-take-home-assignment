@@ -34,7 +34,7 @@ defineProps({
       <span>{{ member }}</span>
     </div>
     <div class="info">
-      <div class="label">Order Time:</div>
+      <div class="label">Updated Time:</div>
       <span>{{ datetime }}</span>
     </div>
   </div>
